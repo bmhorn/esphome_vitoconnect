@@ -79,6 +79,21 @@ binary_sensor:
 Tested with OptoLink ESP32 adapter from here:
 <https://github.com/openv/openv/wiki/Bauanleitung-ESP32-Adafruit-Feather-Huzzah32-and-Proto-Wing>
 
+## Development with the Dev Container
+
+Open the project in VS Code and select **Reopen in Container**. The container uses Python 3.12 and runs `uv sync` after creation.
+
+Use **Terminal > Run Task** to validate both example configurations or compile either board. The default test task validates the ESP32 and ESP8266 ESPHome configurations; the default build task compiles both. These configuration checks are not a substitute for hardware testing, and the repository does not currently contain a separate unit test suite.
+
+The same checks can be run from a terminal:
+
+```sh
+uv run esphome config example-esp32.yaml
+uv run esphome config example-esp8266.yaml
+uv run esphome compile example-esp32.yaml
+uv run esphome compile example-esp8266.yaml
+```
+
 ## Credits
 
 Built based on [VitoWifi] by [Bert Melis] and inspired by [vitowifi_esphome] by [Philipp Hack].

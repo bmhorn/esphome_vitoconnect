@@ -1,0 +1,53 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "ESPHome: Validate ESP32",
+      "type": "shell",
+      "command": "uv run esphome config example-esp32.yaml",
+      "problemMatcher": []
+    },
+    {
+      "label": "ESPHome: Validate ESP8266",
+      "type": "shell",
+      "command": "uv run esphome config example-esp8266.yaml",
+      "problemMatcher": []
+    },
+    {
+      "label": "ESPHome: Test configurations",
+      "dependsOn": [
+        "ESPHome: Validate ESP32",
+        "ESPHome: Validate ESP8266"
+      ],
+      "dependsOrder": "sequence",
+      "group": {
+        "kind": "test",
+        "isDefault": true
+      }
+    },
+    {
+      "label": "ESPHome: Compile ESP32",
+      "type": "shell",
+      "command": "uv run esphome compile example-esp32.yaml",
+      "problemMatcher": []
+    },
+    {
+      "label": "ESPHome: Compile ESP8266",
+      "type": "shell",
+      "command": "uv run esphome compile example-esp8266.yaml",
+      "problemMatcher": []
+    },
+    {
+      "label": "ESPHome: Compile all boards",
+      "dependsOn": [
+        "ESPHome: Compile ESP32",
+        "ESPHome: Compile ESP8266"
+      ],
+      "dependsOrder": "sequence",
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      }
+    }
+  ]
+}
