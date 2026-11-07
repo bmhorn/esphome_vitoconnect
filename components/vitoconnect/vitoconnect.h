@@ -70,6 +70,7 @@ class VitoConnect : public uart::UARTDevice, public PollingComponent {
     // bool write(D& datapoint, T value);  // NOLINT todo: make it a const ref or pointer?
 
   protected:
+    HighFrequencyLoopRequester high_freq_;
 
   private:
     Optolink* _optolink;

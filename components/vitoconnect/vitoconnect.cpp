@@ -26,6 +26,8 @@ static const char *TAG = "vitoconnect";
 
 void VitoConnect::setup() {
 
+    high_freq_.start();
+
     this->check_uart_settings(4800, 2, uart::UART_CONFIG_PARITY_EVEN, 8);
 
     ESP_LOGD(TAG, "Starting optolink with protocol: %s", this->protocol.c_str());
