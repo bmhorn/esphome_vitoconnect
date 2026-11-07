@@ -146,10 +146,23 @@ void OptolinkKW::_send() {
 }
 
 void OptolinkKW::_receive() {
+  bool overflow = false;
   while (_uart->available() != 0) {  // read complete RX buffer
-    _rcvBuffer[_rcvBufferLen] = _uart->read();
-    ++_rcvBufferLen;
+    uint8_t value = _uart->read();
+    if (_rcvBufferLen >= sizeof(_rcvBuffer)) {
+      overflow = true;
+      continue;
+    }
+    _rcvBuffer[_rcvBufferLen++] = value;
     _lastMillis = millis();
+  }
+  if (overflow) {
+    ESP_LOGW(TAG, "Received message exceeds buffer capacity");
+    _tryOnError(LENGTH);
+    _rcvBufferLen = 0;
+    _state = INIT;
+    _lastMillis = millis();
+    return;
   }
   if (_rcvBufferLen == _rcvLen) {  // message complete, TODO: check message (eg 0x00 for READ messages)   
     OptolinkDP* dp = _queue.front();

@@ -83,13 +83,14 @@ Tested with OptoLink ESP32 adapter from here:
 
 Open the project in VS Code and select **Reopen in Container**. The container uses Python 3.12 and runs `uv sync` after creation.
 
-Use **Terminal > Run Task** to validate both example configurations or compile either board. The default test task validates the ESP32 and ESP8266 ESPHome configurations; the default build task compiles both. These configuration checks are not a substitute for hardware testing, and the repository does not currently contain a separate unit test suite.
+Use **Terminal > Run Task** to validate both example configurations or compile either board. The default test task validates the ESP32 and ESP8266 ESPHome configurations; the default build task compiles both. Run the unit tests with `uv run python -m unittest discover -s tests`. These checks are not a substitute for hardware testing.
 
 The same checks can be run from a terminal:
 
 ```sh
 uv run esphome config example-esp32.yaml
 uv run esphome config example-esp8266.yaml
+uv run python -m unittest discover -s tests
 uv run esphome compile example-esp32.yaml
 uv run esphome compile example-esp8266.yaml
 ```

@@ -7,13 +7,14 @@ from .. import CONF_VITOCONNECT_ID, VitoConnect, vitoconnect_ns
 
 DEPENDENCIES = ["vitoconnect"]
 OPTOLINKSensor = vitoconnect_ns.class_("OPTOLINKSensor", sensor.Sensor)
+SENSOR_LENGTH_SCHEMA = cv.one_of(1, 2, 4, int=True)
 
 CONFIG_SCHEMA = sensor.sensor_schema(OPTOLINKSensor).extend(
     {
         cv.GenerateID(): cv.declare_id(OPTOLINKSensor),
         cv.GenerateID(CONF_VITOCONNECT_ID): cv.use_id(VitoConnect),
         cv.Required(CONF_ADDRESS): cv.uint16_t,
-        cv.Required(CONF_LENGTH): cv.uint8_t,
+        cv.Required(CONF_LENGTH): SENSOR_LENGTH_SCHEMA,
     }
 )
 

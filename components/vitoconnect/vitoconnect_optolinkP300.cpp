@@ -198,10 +198,22 @@ void OptolinkP300::_sentAck() {
 }
 
 void OptolinkP300::_receive() {
+  bool overflow = false;
   while (_uart->available() != 0) {  // read complete RX buffer
-    _rcvBuffer[_rcvBufferLen] = _uart->read();
-    ++_rcvBufferLen;
+    uint8_t value = _uart->read();
+    if (_rcvBufferLen >= sizeof(_rcvBuffer)) {
+      overflow = true;
+      continue;
+    }
+    _rcvBuffer[_rcvBufferLen++] = value;
     _lastMillis = millis();
+  }
+  if (overflow) {
+    ESP_LOGW(TAG, "Received message exceeds buffer capacity");
+    _tryOnError(LENGTH);
+    _rcvBufferLen = 0;
+    _state = RECEIVE_ACK;
+    return;
   }
   if (_rcvBuffer[0] != 0x41) {
     // wait for start byte
