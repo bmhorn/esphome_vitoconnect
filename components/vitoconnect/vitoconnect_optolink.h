@@ -91,7 +91,8 @@ enum OptolinkError : uint8_t {
   LENGTH,     ///< Received message length differs from expected length
   NACK,       ///< Message was nacked by Vitotronic
   CRC,        ///< Checksum failed (only for P300)
-  VITO_ERROR  ///< General error
+  VITO_ERROR, ///< General error
+  UNSUPPORTED ///< Datapoint is unsupported by the protocol
 };
 
 typedef void (*OnDataArgCallback)(uint8_t* data, uint8_t len, void* arg);
